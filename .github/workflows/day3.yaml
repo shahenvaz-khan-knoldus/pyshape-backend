@@ -17,10 +17,19 @@ jobs:
   bandit_scan:
     runs-on: ubuntu-latest  
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
       - name: Bandit scan
         run: |
           pip3 install bandit
           bandit -r ./ -f html -o bandit_report.html
+      - name: Upload bandit HTML Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: Bandit-scan-report
+          path: bandit_report.html
+
+  Zap_scan: 
       - name: build go app
         run: docker build -t myapplication .
       - name: Run go app as container
