@@ -8,7 +8,6 @@ CORS(app)
 
 port = 3300
 host= os.getenv("host",deault="127.0.0.1")
-eval(port)
 
 @app.get("/")
 def home():
