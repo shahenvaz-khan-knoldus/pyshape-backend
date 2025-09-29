@@ -27,7 +27,7 @@ jobs:
           mkdir $(pwd)/zap/
           chmod 777 $(pwd)/zap/
       - name: Run container to generate report
-        run: docker run -v $(pwd)/zap/:/zap/wrk/ --link flask_api -t zaproxy/zap-stable zap-api-scan.py -t http://flask_api:8000 -r report.html -J report.yaml -f openapi || true
+        run: docker run -v $(pwd)/zap/:/zap/wrk/ --link flask_api -t zaproxy/zap-stable zap-api-scan.py -t http://flask_api:3300 -r report.html -J report.yaml -f openapi || true
       - name: Upload HTML Report
         uses: actions/upload-artifact@v4
         with:
