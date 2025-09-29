@@ -13,16 +13,14 @@ jobs:
         uses: actions/checkout@v3
       - name: git leaks scan
         run: docker run -v $(pwd):/path zricethezav/gitleaks:latest detect --no-git --source="/path" -v --config="/path/.gitleaks.toml"
+  
   bandit_scan:
     runs-on: ubuntu-latest  
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
       - name: Bandit scan
         run: |
           pip3 install bandit
           bandit -r ./ -f html -o bandit_report.html
-      - name: 
       - name: build go app
         run: docker build -t myapplication .
       - name: Run go app as container
