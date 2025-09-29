@@ -1,11 +1,13 @@
 from flask import Flask, request
 from flask_cors import CORS
 from dbDao import *
+import os
 app = Flask(__name__)
 
 CORS(app)
 
 port = 3300
+host = os.getenv("host", default="127.0.0.1")
 
 @app.get("/")
 def home():
@@ -34,4 +36,4 @@ def deleteTask():
     delete_taskDao(id)
     return {"message": "Task deleted successfully"}
 
-app.run("0.0.0.0",port)
+app.run(host,port)
