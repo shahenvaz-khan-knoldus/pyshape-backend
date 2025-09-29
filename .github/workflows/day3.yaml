@@ -16,6 +16,8 @@ jobs:
   bandit_scan:
     runs-on: ubuntu-latest  
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
       - name: Bandit scan
         run: |
           pip3 install bandit
