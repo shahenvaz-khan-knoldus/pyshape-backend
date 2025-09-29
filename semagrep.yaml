@@ -1,0 +1,8 @@
+rules:
+  - id: insecure-env-use
+    pattern: os.getenv($VAR)
+    pattern-not: os.getenv("...")
+    fix: os.getenv("host",deault="127.0.0.1")
+    message: Calling 'os.getenv' with non-literal argument (e.g. user input) can be insecure.
+    languages: [python]
+    severity: WARNING

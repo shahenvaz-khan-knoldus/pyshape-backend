@@ -28,6 +28,21 @@ jobs:
         with:
           name: Bandit-scan-report
           path: bandit_report.html
+  
+  semagrep_scan:
+    runs-on: ubuntu-latest  
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Bandit scan
+        run: |
+          pip3 install semagrep
+          semgrep scan --config semagrep.yaml app.py -o semapgrepTest.txt
+      - name: Upload semagrep txt Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: semagrep-scan-report
+          path: semapgrepTest.txt
 
   Zap_scan:
     runs-on: ubuntu-latest
