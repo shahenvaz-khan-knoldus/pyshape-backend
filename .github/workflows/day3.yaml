@@ -13,7 +13,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
       - name: git leaks scan
-        run: docker run -v ${PWD}:/path zricethezav/gitleaks:latest detect --no-git --source="/path" -v --config="/path/.gitleaks.toml"
+        run: docker run -v $(pwd):/path zricethezav/gitleaks:latest detect --no-git --source="/path" -v --config="/path/.gitleaks.toml"
       - name: Bandit scan
         run: |
           pip3 install bandit
