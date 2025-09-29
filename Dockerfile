@@ -10,4 +10,4 @@ COPY . .
 
 EXPOSE 3300
 
-CMD ["python3", "deployment.py"]
+CMD ["python3", "app.py"]

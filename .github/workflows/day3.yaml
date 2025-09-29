@@ -19,15 +19,15 @@ jobs:
           pip3 install bandit
           bandit -r ./
       - name: build go app
-        run: docker build -t go .
+        run: docker build -t myapp .
       - name: Run go app as container
-        run: docker run -d --name golanapi go
+        run: docker run -d --name flask_api myapp
       - name: Create directory
         run: |
           mkdir $(pwd)/zap/
           chmod 777 $(pwd)/zap/
       - name: Run container to generate report
-        run: docker run -v $(pwd)/zap/:/zap/wrk/ --link golanapi -t zaproxy/zap-stable zap-api-scan.py -t http://golanapi:8000 -r report.html -J report.yaml -f openapi || true
+        run: docker run -v $(pwd)/zap/:/zap/wrk/ --link flask_api -t zaproxy/zap-stable zap-api-scan.py -t http://flask_api:3300 -r report.html -J report.yaml -f openapi || true
       - name: Upload HTML Report
         uses: actions/upload-artifact@v4
         with:
