@@ -29,7 +29,11 @@ jobs:
           name: Bandit-scan-report
           path: bandit_report.html
 
-  Zap_scan: 
+  Zap_scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
       - name: build go app
         run: docker build -t myapplication .
       - name: Run go app as container
