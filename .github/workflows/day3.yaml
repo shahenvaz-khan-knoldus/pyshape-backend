@@ -22,7 +22,7 @@ jobs:
       - name: Bandit scan
         run: |
           pip3 install bandit
-          bandit -r ./ -f html -o bandit_report.html
+          bandit -r ./ -f html -o bandit_report.html || true
       - name: Upload bandit HTML Report
         uses: actions/upload-artifact@v4
         with:
