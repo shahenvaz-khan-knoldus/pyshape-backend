@@ -36,7 +36,7 @@ jobs:
         uses: actions/checkout@v3
       - name: Bandit scan
         run: |
-          pip3 install semagrep
+          pip3 install semgrep
           semgrep scan --config semagrep.yaml app.py -o semapgrepTest.txt
       - name: Upload semagrep txt Report
         uses: actions/upload-artifact@v4
