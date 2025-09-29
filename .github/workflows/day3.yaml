@@ -1,0 +1,35 @@
+name: Bandit scan, Semgrep scan, Gitleaks scan, OWASP ZAP scan (DAST)
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build-and-report:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: git leaks scan
+        run: docker run -v ${PWD}:/path zricethezav/gitleaks:latest detect --no-git --source="/path" -v --config="/path/.gitleaks.toml"
+      - name: Bandit scan
+        run: |
+          pip3 install bandit
+          bandit -r ./
+      - name: build go app
+        run: docker build -t go .
+      - name: Run go app as container
+        run: docker run -d --name golanapi go
+      - name: Create directory
+        run: |
+          mkdir $(pwd)/zap/
+          chmod 777 $(pwd)/zap/
+      - name: Run container to generate report
+        run: docker run -v $(pwd)/zap/:/zap/wrk/ --link golanapi -t zaproxy/zap-stable zap-api-scan.py -t http://golanapi:8000 -r report.html -J report.yaml -f openapi || true
+      - name: Upload HTML Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: html-report
+          path: zap/report.html

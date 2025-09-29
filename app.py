@@ -5,6 +5,8 @@ app = Flask(__name__)
 
 CORS(app)
 
+port = 3300
+
 @app.get("/")
 def home():
     return {"Message": "Welcome to flask application"}
@@ -32,4 +34,4 @@ def deleteTask():
     delete_taskDao(id)
     return {"message": "Task deleted successfully"}
 
-app.run("0.0.0.0",3300,debug=True)
+app.run("127.0.0.0",port)
